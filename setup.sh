@@ -9,4 +9,4 @@ commit
 logout
 exit
 EOF
-todeIt $1 mc load LispGs filetree://$GS_HOME/shared/repos/BP2017RH1/LispGs
+todeIt $1 mc load LispGs filetree://$GS_HOME/shared/repos/LispGs
