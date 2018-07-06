@@ -1,3 +1,0 @@
-*LispGs
-stackClass
-  ^ TDNewStack

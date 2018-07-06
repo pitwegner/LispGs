@@ -1,0 +1,82 @@
+(apply + (list 3 (+ 2 2)))
+
+^ [:args | self + @env0: valueWithArguments: args] @env0: valueWithArguments: {self list @env0: valueWithArguments: {3. 4}}
+
+((lambda (x y)
+         (define z 5)
+         (+ x (* y z))) (- 4 2) 8)
+
+--------
+
+^ [:x :y | | z |
+    z := 5.
+    (self @env3: +) valueWithArguments: {x. (self @env3: *) valueWithArguments: {y. z}}] valueWithArguments: {(self @env3: -) valueWithArguments: {4. 2}. 8}
+
+---------------------------------------------------------------------------------------
+
+(+ 3 4)
+
+--------
+
+^ self + @env0: valueWithArguments: {3. 4}
+
+---------------------------------------------------------------------------------------
+(define foo (lambda (x y)
+    (define z (lambda (a) (bar 2 a)))
+    (bar x (z y))))
+(define bar (lambda (a b) (+ a b)))
+
+
+
+--------
+
+bar
+    ^ [:a :b | self + @env0: valueWithArguments: a b]
+
+foo
+    ^ [:x :y | | z |
+        z := [:a | self bar @env0: valueWithArguments: {2. a}].
+        self bar @env0: valueWithArguments: {x. (z @env0: valueWithArguments: {y})}]
+
+---------------------------------------------------------------------------------------
+
+(define bar (lambda (a) (cond
+    ((eq a 1) 1)
+    (true (bar (- a 1))))))
+
+--------
+
+bar
+    ^ [:a | self cond @env0: valueWithArguments: {
+        {{self eq @env0: valueWithArguments: {a. 1}. 1}.
+         {true. self bar @env0: valueWithArguments: {self - @env0: valueWithArguments: {a. 1}}}}}]
+
++
+
+    [...]
+
+(define foo +)
+(define foo (lambda (x y) (+ x y)))
+
+((foo) 3 4)
+
+self foo @env0: value withArguments: {3. 4}
+(self foo @env0: valueWithArguments: {}) @env0: valueWithArguments: {3. 4}
+
+
+entry:
+1. parse as array
+2. if not array -- return the elem
+3. else if first elem is atom (not array and not nil) and equal to define -- define method and fill with recursively parsed rest
+4. else create return node with recursively parsed rest
+
+recursive: (local vars mitfuehren)
+1. if not array -- return the elem
+2. else if first elem is atom (not array and not nil) --
+3.1 if define -- define local temps
+3.1 if cond -- create cond send with specially parsed rest
+3.2 else lookup that elem in methDict and create valueWithArguments send with parsed rest
+3.3 if no function found, lookup that elem as local var and create valueWithArguments send with parsed rest
+3.4 if not found, throw error that symbol is no function
+4. else if first first is lambda, create block with input params and local vars and fill with recursively parsed rest (ensure for local vars)
+5. else 'The author is confused - parser error'
