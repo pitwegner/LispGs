@@ -2,12 +2,11 @@
 	"class" : {
 		 },
 	"instance" : {
-		"createArgListFrom:in:" : "Anonymous 07/05/2018 17:50",
+		"createArgListFrom:in:" : "Anonymous 07/13/2018 04:48",
 		"createLiteralLeaf:" : "Anonymous 07/05/2018 19:24",
-		"doIt:" : "Anonymous 07/06/2018 08:30",
 		"handleAtom:in:" : "Anonymous 07/05/2018 17:49",
 		"handleComplexSelector:in:" : "Anonymous 07/05/2018 17:53",
-		"handleCond:in:" : "Anonymous 07/05/2018 18:25",
+		"handleCond:in:" : "Anonymous 07/13/2018 05:23",
 		"handleDefine:in:" : "Anonymous 07/05/2018 17:49",
 		"handleLambda:in:" : "Anonymous 07/05/2018 17:50",
 		"handleQuote:in:" : "Anonymous 07/05/2018 19:04",
@@ -15,8 +14,7 @@
 		"initialize" : "Anonymous 07/04/2018 14:13",
 		"lexLevel" : "Anonymous 07/04/2018 14:12",
 		"lexLevel:" : "Anonymous 07/04/2018 14:12",
-		"newLispMeth:" : "Anonymous 07/02/2018 10:48",
-		"parse:" : "Anonymous 07/06/2018 04:28",
+		"parse:" : "Anonymous 07/30/2018 00:51",
 		"parse:env:" : "Anonymous 07/05/2018 18:47",
 		"rewriteArray:" : "Anonymous 07/05/2018 17:49",
 		"with:do:" : "Anonymous 07/05/2018 17:49" } }

@@ -1,0 +1,14 @@
+{
+	"category" : "LispParser-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "LispTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

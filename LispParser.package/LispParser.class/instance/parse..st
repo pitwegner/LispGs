@@ -5,7 +5,13 @@ parse: source
     on: Error
     do: [ self error: 'Not a valid expression' ].
   arr isArray
-    ifFalse: [ ^ self handleAtom: arr in: Dictionary new ].
+    ifFalse: [ 
+      ^ GsComMethNode newSmalltalk
+        selector: #'doIt';
+        source: source;
+        class: Object;
+        appendStatement:
+            (GsComReturnNode new returnFromHome: (self handleAtom: arr in: Dictionary new)) ].
   arr := self rewriteArray: arr.
   arr first isArray not & arr first isNil not & (arr first == #'define')
     ifTrue: [ 

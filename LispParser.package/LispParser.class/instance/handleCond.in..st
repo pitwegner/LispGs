@@ -8,12 +8,22 @@ handleCond: exp in: env
       arrayBuilderNode
         appendElement:
           (GsComArrayBuilderNode new
-            appendElement: (self parse: condition first env: env);
-            appendElement: (self parse: condition second first env: env)) ].
+            appendElement:
+                (GsComBlockNode new
+                    lexLevel: self lexLevel;
+                    appendStatement: (self parse: condition first env: env);
+                    yourself);
+            appendElement:
+                (GsComBlockNode new
+                    lexLevel: self lexLevel;
+                    appendStatement:
+                        (self parse: condition second first env: env);
+                    yourself);
+            yourself) ].
   ^ GsComSendNode new
     stSelector: #'valueWithArguments:';
     rcvr:
         (GsComSendNode new
             lispSelector: exp first;
             rcvr: GsComVariableNode newSelf);
-    appendArgument: arrayBuilderNode
+    appendArgument: (GsComArrayBuilderNode new appendElement: arrayBuilderNode)

@@ -1,7 +1,7 @@
 run
 | methNodes gsMethod methDict env |
   methNodes := Array new.
-  #(#'+' #'-' #'*' #'/' #'&' #'|' #'>' #'<' #'<=' #'>=')
+  #(#'+' #'-' #'*' #'/' #'&' #'|' #'>' #'<' #'<=' #'>=' #'=')
     do: [ :symbol | 
       | blockNode argLeaf1 argLeaf2 |
       blockNode := GsComBlockNode new lexLevel: 1.
@@ -19,8 +19,12 @@ run
         appendStatement:
           (GsComSendNode new
             stSelector: symbol;
-            rcvr: (GsComVariableNode new leaf: argLeaf1);
-            appendArgument: (GsComVariableNode new leaf: argLeaf2)).
+            rcvr: (GsComSendNode new
+		stSelector: #'value';
+		rcvr: (GsComVariableNode new leaf: argLeaf1));
+            appendArgument: (GsComSendNode new
+		stSelector: #'value';
+		rcvr: (GsComVariableNode new leaf: argLeaf2))).
       methNodes
         add:
           (GsComMethNode newSmalltalk
@@ -43,9 +47,9 @@ run
 Object
     compileMethod: 'sendmessage
 	^ [:args | args @env0:
-        perform: args @env0: first
-        env: args @env0: second @env0: second @env0: first
-        withArguments: args @env0: second @env0: first ]'
+        perform: args @env0: first @env0: value
+        env: args @env0: second @env0: second @env0: first @env0: value
+        withArguments: args @env0: second @env0: first @env0: value]'
     category: 'primitives'
     using: GsSession currentSession symbolList
     environmentId: 3.
@@ -59,9 +63,9 @@ Object
 
 Object
     compileMethod: 'cond
-	^ [:args | args @env0: do: [:pair | pair @env0: first @env0:
-		ifTrue: [pair @env0: second]
-		ifFalse: [self @env0: error]]].'
+	^ [:pairs | pairs @env0: first @env0: first @env0: value @env0: 
+		ifTrue: [pairs @env0: first @env0: second @env0: value]
+		ifFalse: [self cond @env0: valueWithArguments: {pairs @env0: allButFirst}]].'
     category: 'primitives'
     using: GsSession currentSession symbolList
     environmentId: 3.

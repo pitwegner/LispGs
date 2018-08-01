@@ -1,0 +1,14 @@
+{
+	"category" : "LispParser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "Lisp",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }
